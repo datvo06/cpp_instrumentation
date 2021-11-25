@@ -38,11 +38,26 @@ int32_t getEndPos(const VertexInfo& v){
 	return v.endPos;
 }
 
+std::string getType(const VertexInfo& v){
+	return v.nType;
+}
+
+std::string getContent(const VertexInfo& v){
+	return v.content;
+}
+
+
 typedef int32_t (*IntValFunc)(const VertexInfo&);
+typedef std::string (*StrValFunc)(const VertexInfo&);
+
 const std::map<std::string, IntValFunc> funcMapInt = {{"start_line", &getStartLine},
 	{"start_pos", &getStartPos}, {"start_col", &getStartCol}, {"end_line", &getEndLine},
 	{"end_pos", &getEndPos}, {"end_col", &getEndCol}, {"id", &getId}
 };
+const std::map<std::string, StrValFunc> funcMapStr = {{"content", &getContent},
+	{"ntype", &getType}
+};
+
 
 VertexItr findVertex(const ASTGraph& g, const std::pair<std::string, int32_t> kvPair){
 	auto key = kvPair.first;
@@ -57,6 +72,23 @@ VertexItr findVertex(const ASTGraph& g, const std::pair<std::string, int32_t> kv
 	}
 	return viEnd;
 }
+
+
+VertexItr findVertex(const ASTGraph& g, const std::pair<std::string, std::string> kvPair){
+	auto key = kvPair.first;
+	auto val = kvPair.second;
+	auto p_func = funcMapStr.at(key);
+	VertexItr vi, viEnd;
+	for (boost::tie(vi, viEnd) = boost::vertices(g); vi != viEnd; ++vi){
+		auto t_val = (*p_func)(g[*vi]);
+		if (t_val == val){
+			return vi;
+		}
+	}
+	return viEnd;
+}
+
+
 
 ASTGraph jsonStrToGraph(std::string jsonStr){
 	// First: parse string
