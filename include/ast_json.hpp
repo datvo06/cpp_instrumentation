@@ -18,15 +18,16 @@ namespace graphutils{
 		std::int32_t endLine;
 		std::int32_t endCol;
 		std::int32_t endPos;
-		std::int32_t pId;
 	};
 
 	struct EdgeInfo{
 		float weight;
 		std::string label;
 	};
+
 		
 	typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS, VertexInfo, EdgeInfo> ASTGraph;
+	typedef boost::graph_traits<ASTGraph>::vertex_iterator VertexItr;
 	ASTGraph jsonStrToGraph(std::string jsonStr);
 }
 
