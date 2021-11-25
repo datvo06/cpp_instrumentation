@@ -29,6 +29,7 @@ namespace graphutils{
 	typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS, VertexInfo, EdgeInfo> ASTGraph;
 	typedef boost::graph_traits<ASTGraph>::vertex_iterator VertexItr;
 	ASTGraph jsonStrToGraph(std::string jsonStr);
+	VertexItr findVertex(const ASTGraph& g, std::function< bool(VertexInfo)> lambda);
 }
 
 #endif

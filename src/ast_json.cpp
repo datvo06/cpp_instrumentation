@@ -89,6 +89,16 @@ VertexItr findVertex(const ASTGraph& g, const std::pair<std::string, std::string
 }
 
 
+VertexItr findVertex(const ASTGraph& g, std::function<bool(VertexInfo)> filterFunc){
+	VertexItr vi, viEnd;
+	for (boost::tie(vi, viEnd) = boost::vertices(g); vi != viEnd; ++vi){
+		if (filterFunc(g[*vi]))
+			return vi;
+	}
+	return viEnd;
+}
+
+
 
 ASTGraph jsonStrToGraph(std::string jsonStr){
 	// First: parse string
@@ -105,7 +115,7 @@ ASTGraph jsonStrToGraph(std::string jsonStr){
 		};
 		auto pID =  jNodeDict["parent"];
 		if (pID != -1){
-			auto p = *findVertex(g, std::make_pair("id", pID));
+			auto p = *findVertex(g, std::make_pair("id", (int)pID));
 			boost::add_edge(p, v, {1.0, "parent_child"}, g);
 		}
 	}
