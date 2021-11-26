@@ -18,8 +18,9 @@ namespace datautils {
 	struct DataWorker: llvm::ModulePass {
 		static char ID;
 		DataWorker();
+		bool runOnModule(llvm::Module &M);
 		private:
-		std::dumpGlobals
+		bool dumpGlobals
 	}
 }
 
