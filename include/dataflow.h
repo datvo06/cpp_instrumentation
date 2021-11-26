@@ -20,7 +20,7 @@ namespace datautils {
 		DataWorker();
 		bool runOnModule(llvm::Module &M);
 		private:
-		bool dumpGlobals
+		bool dumpGlobals;
 	}
 }
 
