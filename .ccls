@@ -1,0 +1,7 @@
+% clang -Wall -Wextra
+%cpp -isystem /usr/local/include
+%cpp -isystem /Users/theengine-mac/Marc/cpp_instrumentation/include
+%cpp -isystem /opt/homebrew/opt/llvm@13/include/
+%cpp -std=c++14
+%cpp -stdlib=libc++
+%h -x c++-header
